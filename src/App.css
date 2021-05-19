@@ -1,0 +1,29 @@
+#root{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+.App {
+  display:flex;
+flex-direction: column;
+
+  justify-content: space-between;
+  width: 1100px;
+
+}
+.cardlist{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.left{
+  display: flex;
+  flex-direction: column;
+}
+svg{
+  overflow: visible;
+}
+.mainpage{
+  display: flex;
+  justify-content: space-between;
+}
