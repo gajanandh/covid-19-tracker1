@@ -1,9 +1,6 @@
 import React ,{useEffect,useState}from 'react'
 import {Line} from 'react-chartjs-2'
 
-
-// import Chart from './chart'
-
 const ChartList = ()=>{
     const [data,setData]=useState([])
     const [casetype,setCaseType]=useState('confirmed')
@@ -13,8 +10,6 @@ const ChartList = ()=>{
             const data  = await  res.json()
             const dataobj = Object.entries(data);
             const dateAndCases = Object.entries(dataobj[1].[1].dates)
-            console.log(dateAndCases)
-            // console.log(casetype)
             
             const final = dateAndCases.map(date=>{
                 return{
@@ -22,24 +17,22 @@ const ChartList = ()=>{
                     y:date[1].total.[casetype]
                 }
             })
-            // console.log("hi",final)
             setData(final)
         }
         gettimedata();
     },[casetype])
     const handleCaseType = (e)=>{
         setCaseType(e.target.value)
-        // console.log(e.target.value)
     }
-    console.log(data)
     return(
-        // <Chart data = {data}/>
         <div>
-            <select name="datatype" id="casetype" onChange ={handleCaseType}>
+            <select name="datatype" id="casetype" defaultValue ="confirmed" onChange ={handleCaseType}>
                 <option value="recovered">cases</option>
-                <option value="confirmed">confirmed</option>
+                <option value="confirmed" >confirmed</option>
                 <option value="deceased">deaths</option>
             </select>
+
+            
             <Line
             data = {{
                 datasets:[{
@@ -60,6 +53,7 @@ const ChartList = ()=>{
                 scales: {
                   xAxes: [
                     {
+                      
                       type: "time",
                       time: {
                         format: "YY-MM-DD",

@@ -1,28 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState , useContext } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleQuantile } from 'd3-scale';
 import ReactTooltip from 'react-tooltip';
+import { CovidDataContext} from '../../context/data.context'
 import './Map.css'
 
 const INDIA_TOPO_JSON = require('./india.topo.json');
+
 
 const PROJECTION_CONFIG = {
   scale: 350,
   center: [80,20]
 };
 
-// Yellow Variants
-const COLOR_RANGE = [
-  '#fefacd',
-  '#fff67d',
-  '#feee75',
-  '#ffff00',
-  '#ffdf00',
-  '#ffd800',
-  '#ffbe00',
-  '#ffb900',
-  '#ee9b0f'
-];
 
 const DEFAULT_COLOR = '#EEE';
 const geographyStyle = {
@@ -30,7 +20,7 @@ const geographyStyle = {
     outline: 'none'
   },
   hover: {
-    fill: '#ccc',
+    fill: '#808080 ',
     transition: 'all 250ms',
     outline: 'none'
   },
@@ -39,77 +29,86 @@ const geographyStyle = {
   }
 };
 
-const getHeatMapData = (info) => {
 
-  return info.slice(1).map(s => {
-    return {
-      id: s.statecode,
-      state: s.state,
-      value: s.confirmed
-    }
-  })
-}
 
-function Map({ handleHover, info }) {
-
+ function  Map({handleHover}) {
   const [tooltipContent, setTooltipContent] = useState('');
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    if (info && info.length > 1) {
-      setData(getHeatMapData(info))
-    }
-  }, [info])
-
-  //set color according to scale
+  const info = useContext(CovidDataContext)
+  if(!info){
+    return null;
+  }
+  const getMax = () => {
+    let max = 0;
+    info.forEach(state=>{
+      if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
+    })
+    return max;
+  }
+  
   const colorScale = scaleQuantile()
-    .domain(data.map((d) => {
-      return d.value;
-    }))
-    .range(COLOR_RANGE);
-  //handle hover
-  // const onMouseEnter = (geo, current = { value: 'NA' }) => {
-  //   return () => {
-  //     handleHover(geo.id);
-  //     setTooltipContent(`${geo.properties.name}: Confirmed: ${current.value}`);
-  //   };
-  // };
-  // //handle mouse out
-  // const onMouseLeave = () => {
-  //   handleHover('TT');
-  //   setTooltipContent('');
-  // };
+  .domain([0, getMax()])
+  .range([
+    '#ffebee',
+    '#ffcdd2',
+    '#ef9a9a',
+    '#e57373',
+    '#ef5350',
+    '#f44336',
+    '#e53935',
+    '#d32f2f',
+    '#c62828',
+    '#b71c1c'
+  ]);
+  
+  const getconfirmed = (id,casetype)=>{
+    let c = info.find(s=>s.name === id)
+    return c[casetype]
+  }
+  
+  const onMouseEnter = (geo) => {
+    return () => {
+      let cases = getconfirmed(geo.id,"confirmed")- getconfirmed(geo.id,"recovered")
+      setTooltipContent(`${geo.properties.name}: ${cases}`)
+      handleHover(geo.id)
+      
+    };
+  };
+  const onMouseLeave = () => {
+    setTooltipContent('');
+    handleHover("TT")
+  };
 
   return (
     <div className="full-width-height container">
-      {/* <h6 className="no-margin center">States and UTs</h6> */}
-      <ReactTooltip>{tooltipContent}</ReactTooltip>
-      <ComposableMap
-        projectionConfig={PROJECTION_CONFIG}
-        projection="geoMercator"
-        width={200}
-        height={220}
-        data-tip=""
-      >
-        <Geographies geography={INDIA_TOPO_JSON}>
-          {({ geographies }) =>
-            geographies.map(geo => {
-              // console.log(geo)
-              const current = data.find(s => s.id === geo.id);
-              return (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  fill={current ? colorScale(current.value) : DEFAULT_COLOR}
-                  style={geographyStyle}
-                  // onMouseEnter={onMouseEnter(geo, current)}
-                  // onMouseLeave={onMouseLeave}
-                />
-              );
-            })
-          }
-        </Geographies>
-      </ComposableMap>
+     
+        <ReactTooltip>{tooltipContent}</ReactTooltip>
+        <ComposableMap
+          projectionConfig={PROJECTION_CONFIG}
+          projection="geoMercator"
+          width={200}
+          height={220}
+          data-tip=""
+        >
+          <Geographies geography={INDIA_TOPO_JSON}>
+            {({ geographies }) =>
+              geographies.map(geo => {
+                let _id = geo.id
+                let c = info.find(s=>s.name === geo.id)
+                return (
+                  <Geography
+                    key={geo.rsmKey}
+                    geography={geo}
+                    fill={c? colorScale(c.confirmed) : DEFAULT_COLOR}
+                    style={geographyStyle}
+                    onMouseEnter={onMouseEnter(geo)}
+                    onMouseLeave={onMouseLeave}
+                  />
+                );
+              })
+            }
+          </Geographies>
+        </ComposableMap>
+      
     </div>
   );
 }

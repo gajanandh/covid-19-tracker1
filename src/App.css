@@ -1,29 +1,48 @@
-#root{
-display: flex;
-justify-content: center;
-align-items: center;
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .App {
-  display:flex;
-flex-direction: column;
-
+  display: flex;
+  flex-direction: column;
+  width: 95%;
   justify-content: space-between;
-  width: 1100px;
-
 }
-.cardlist{
+.cardlist {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.left{
+.left {
   display: flex;
   flex-direction: column;
 }
-svg{
+svg {
   overflow: visible;
+  outline: none;
 }
-.mainpage{
+path:hover {
+  cursor: pointer;
+}
+.mainpage {
   display: flex;
   justify-content: space-between;
+}
+.cardlist {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+@media (max-width: 600px) {
+  .mainpage {
+    background-color: aquamarine;
+    flex-direction: column;
+  }
+  svg {
+    width: 500px;
+  }
+  body {
+    width: 100vh;
+  }
 }

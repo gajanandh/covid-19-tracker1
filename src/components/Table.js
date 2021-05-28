@@ -1,7 +1,13 @@
-import React from 'react'
+import React ,{ useContext}from 'react'
+import {CovidDataContext} from '../context/data.context'
 import './Table.css'
 
 const Table =(prop)=>{
+  const data = useContext(CovidDataContext);
+  if(!data){
+      return null;
+    }
+
 
     return(
         <table>
@@ -15,14 +21,14 @@ const Table =(prop)=>{
           </tr>
         </thead>
         <tbody>
-        {prop.state.map(state=>{
+        {data.map(state=>{
         return(
-          <tr key ={state.state}>
-            <td>{state.state}</td>
-            <td>{state.cases}</td>
+          <tr key ={state.name}>
+            <td>{state.name}</td>
+            <td>{state.confirmed}</td>
             <td>{state.recovered}</td>
-            <td>{state.deaths}</td>
-            <td>{state.active}</td>
+            <td>{state.deceased}</td>
+            <td>{state.vaccinated}</td>
           </tr>
         )
       }
