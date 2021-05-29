@@ -40,13 +40,13 @@ const geographyStyle = {
     return null;
   }
 
-  const getMax = () => {
-    let max = 0;
-    info.forEach(state=>{
-      if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
-    })
-    return max;
-  }
+  // const getMax = () => {
+  //   let max = 0;
+  //   info.forEach(state=>{
+  //     if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
+  //   })
+  //   return max;
+  // }
   const colorScale = () => {
     switch (caseType) {
       case "active": {
@@ -143,7 +143,6 @@ const geographyStyle = {
           <Geographies geography={INDIA_TOPO_JSON}>
             {({ geographies }) =>
               geographies.map(geo => {
-                let _id = geo.id
                 let c = info.find(s=>s.name === geo.id)
                 // console.log(caseType)
                 return (
