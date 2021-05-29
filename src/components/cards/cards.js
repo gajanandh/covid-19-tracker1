@@ -24,8 +24,6 @@ const Card = ({currentState,casetype})=>{
             <h4>{new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(cases)}</h4>
             
         </div>       
-
-       
            )
 }
 export default Card

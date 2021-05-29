@@ -12,22 +12,26 @@ function App() {
   const [total,setTotal]=useState({});
   const [data,setData]=useState();
   const [currentState, setCurrentState] = useState("TT");
+  const [caseType, setCaseType] = useState("active");
 
   const handleHover=(id)=>{
     setCurrentState(id)
-    // console.log(currentState)
   }
+  const getCasetype=(e)=>{
+    setCaseType(e.target.innerText.toLowerCase())
+  }
+
   return (
     <CovidDataProvider>
       <div className="App">
         <div className="mainpage">
           <div className='left'>
-            <div className="cardlist">
-              <Card currentState = {currentState} casetype = {'active'}/>
+            <div className="cardlist"onClick ={getCasetype}>
+              <Card currentState = {currentState}  casetype = {'active'}/>
               <Card currentState = {currentState} casetype = {'recovered'}/>
               <Card currentState = {currentState} casetype = {'deceased'}/>
             </div>
-            <Map handleHover ={handleHover}/>  
+            <Map handleHover ={handleHover} caseType = {caseType}/>  
           </div>
         <div className="right">
         <Table className = "table"/>

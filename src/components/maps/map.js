@@ -10,14 +10,16 @@ const INDIA_TOPO_JSON = require('./india.topo.json');
 
 const PROJECTION_CONFIG = {
   scale: 350,
-  center: [80,20]
+  center: [82.5,22]
 };
 
 
 const DEFAULT_COLOR = '#EEE';
 const geographyStyle = {
   default: {
-    outline: 'none'
+    outline: 'none',
+    stroke:"#000",
+    strokeWidth:".5px",
   },
   hover: {
     fill: '#808080 ',
@@ -31,12 +33,13 @@ const geographyStyle = {
 
 
 
- function  Map({handleHover}) {
+ function  Map({handleHover,caseType}) {
   const [tooltipContent, setTooltipContent] = useState('');
   const info = useContext(CovidDataContext)
   if(!info){
     return null;
   }
+
   const getMax = () => {
     let max = 0;
     info.forEach(state=>{
@@ -44,9 +47,49 @@ const geographyStyle = {
     })
     return max;
   }
-  
-  const colorScale = scaleQuantile()
-  .domain([0, getMax()])
+  const colorScale = () => {
+    switch (caseType) {
+      case "active": {
+        // console.log(caseType)
+        return colorScaleBlue;
+      }
+      case "recovered": {
+        return colorScaleGreen;
+      }
+      case "deceased": {
+        return colorScaleRed;
+      }
+      default: {
+        return colorScaleRed;
+      }
+    }
+  };
+  const colorScaleBlue = scaleQuantile()
+  .domain([0, 100000])
+  .range([
+    '#CCE5FF',
+    '#99CCFF',
+    '#66B2FF',
+    '#3399FF',
+    '#007FFF',
+    '#0066CC',
+    '#004C99',
+    '#003366'
+  ]);
+  const colorScaleGreen = scaleQuantile()
+  .domain([0, 1000000])
+  .range([
+    '#CCFF99',
+    '#99FF99',
+    '#B3FF66',
+    '#99FF33',
+    '#80FF00',
+    '#66CC00',
+    '#4D9900',
+    '#336600'
+  ]);
+  const colorScaleRed = scaleQuantile()
+  .domain([0, 10000])
   .range([
     '#ffebee',
     '#ffcdd2',
@@ -59,17 +102,25 @@ const geographyStyle = {
     '#c62828',
     '#b71c1c'
   ]);
-  
+  console.log(caseType)
   const getconfirmed = (id,casetype)=>{
+    // console.log(id,casetype)
     let c = info.find(s=>s.name === id)
     return c[casetype]
   }
   
   const onMouseEnter = (geo) => {
     return () => {
-      let cases = getconfirmed(geo.id,"confirmed")- getconfirmed(geo.id,"recovered")
+      if (caseType === "active")
+      {let cases = getconfirmed(geo.id,"confirmed")- getconfirmed(geo.id,"recovered")
       setTooltipContent(`${geo.properties.name}: ${cases}`)
       handleHover(geo.id)
+      }
+      else{
+        let cases = getconfirmed(geo.id,caseType)
+        setTooltipContent(`${geo.properties.name}: ${cases}`)
+        handleHover(geo.id)
+      }
       
     };
   };
@@ -94,11 +145,12 @@ const geographyStyle = {
               geographies.map(geo => {
                 let _id = geo.id
                 let c = info.find(s=>s.name === geo.id)
+                // console.log(caseType)
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill={c? colorScale(c.confirmed) : DEFAULT_COLOR}
+                    fill={c? colorScale()(c[caseType]) : DEFAULT_COLOR}
                     style={geographyStyle}
                     onMouseEnter={onMouseEnter(geo)}
                     onMouseLeave={onMouseLeave}
