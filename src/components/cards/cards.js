@@ -21,7 +21,7 @@ const Card = ({currentState,casetype})=>{
     return(
         <div className="card">
             <h2>{casetype}</h2>
-            <h4>{cases.toLocalString('en-IN')}</h4>
+            <h4>{cases.toLocaleString('en-IN')}</h4>
             
         </div>       
            )
