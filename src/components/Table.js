@@ -1,13 +1,27 @@
 import React ,{ useContext}from 'react'
 import {CovidDataContext} from '../context/data.context'
 import './Table.css'
+import {STATE_NAMES} from '../statename'
 
 const Table =(prop)=>{
-  const data = useContext(CovidDataContext);
+  let data = useContext(CovidDataContext);
   if(!data){
       return null;
     }
-
+    const getStateName = (id) =>{
+      let statename = (STATE_NAMES[id])
+      return statename
+    }
+console.log(Object.entries(STATE_NAMES))
+     data = data.sort(function (a, b) {
+      if (a.confirmed < b.confirmed) {
+        return -1;
+      }
+      if (a.confirmed > b.confirmed) {
+        return 1;
+      }
+      return 0;
+    });
 
     return(
         <table>
@@ -15,20 +29,20 @@ const Table =(prop)=>{
           <tr>
             <th >state</th>
             <th>cases</th>
+            <th>active</th>
             <th>recovered</th>
             <th>deaths</th>
-            <th>active</th>
           </tr>
         </thead>
         <tbody>
         {data.map(state=>{
         return(
           <tr key ={state.name}>
-            <td>{state.name}</td>
+            <td>{getStateName(state.name)}</td>
             <td>{state.confirmed}</td>
+            <td>{state.confirmed - state.recovered - state.deceased}</td>
             <td>{state.recovered}</td>
             <td>{state.deceased}</td>
-            <td>{state.vaccinated}</td>
           </tr>
         )
       }

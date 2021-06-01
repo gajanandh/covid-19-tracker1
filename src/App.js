@@ -9,12 +9,16 @@ import ChartList from './components/charts/chartlist'
 function App() {
   const [currentState, setCurrentState] = useState("TT");
   const [caseType, setCaseType] = useState("active");
+  const [preNum , setPrevNum] = useState()
+
 
   const handleHover=(id)=>{
     setCurrentState(id)
   }
   const getCasetype=(e)=>{
-    setCaseType(e.target.innerText.toLowerCase())
+    {setCaseType(e.target.innerText.toLowerCase())
+      console.log("hi")
+  }
   }
 
   return (
@@ -22,10 +26,11 @@ function App() {
       <div className="App">
         <div className="mainpage">
           <div className='left'>
-            <div className="cardlist"onClick ={getCasetype}>
-              <Card currentState = {currentState}  casetype = {'active'}/>
-              <Card currentState = {currentState} casetype = {'recovered'}/>
-              <Card currentState = {currentState} casetype = {'deceased'}/>
+            <div className="cardlist" >
+              <Card getCasetype ={getCasetype} className = {"confirmed"} currentState = {currentState}  casetype = {'confirmed'}/>
+              <Card getCasetype ={getCasetype} className = {"active"} currentState = {currentState}  casetype = {'active'}/>
+              <Card getCasetype ={getCasetype} className = {"recovered"} currentState = {currentState} casetype = {'recovered'}/>
+              <Card getCasetype ={getCasetype} className = {"deceased"}currentState = {currentState} casetype = {'deceased'}/>
             </div>
             <Map handleHover ={handleHover} caseType = {caseType}/>  
           </div>

@@ -1,5 +1,5 @@
 body {
-  background-color: wheat;
+  background-color: #fff;
 }
 #root {
   display: flex;
@@ -26,9 +26,7 @@ svg {
   outline: none;
 }
 
-path:hover {
-  cursor: pointer;
-}
+
 .mainpage {
   display: flex;
   justify-content: space-between;
@@ -36,11 +34,22 @@ path:hover {
 .cardlist {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  margin: 0px;
+}
+.active{
+  color:blue;
+}
+.recovered{
+  color: green;
+}
+.deceased{
+  color: red;
 }
 @media (max-width: 600px) {
+  .App{
+    width: 100vh;
+  }
   .mainpage {
-    background-color: aquamarine;
     flex-direction: column;
   }
   svg {
@@ -48,5 +57,11 @@ path:hover {
   }
   body {
     width: 100vh;
+  }
+  .container{
+    margin: auto;
+  }
+  table{
+    margin: auto ;
   }
 }

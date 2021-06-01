@@ -19,7 +19,7 @@ const geographyStyle = {
   default: {
     outline: 'none',
     stroke:"#000",
-    strokeWidth:".5px",
+    strokeWidth:".2px",
   },
   hover: {
     fill: '#808080 ',
@@ -27,6 +27,8 @@ const geographyStyle = {
     outline: 'none'
   },
   pressed: {
+    fill: '#808080 ',
+    transition: 'all 250ms',
     outline: 'none'
   }
 };
@@ -39,14 +41,14 @@ const geographyStyle = {
   if(!info){
     return null;
   }
-
-  // const getMax = () => {
-  //   let max = 0;
-  //   info.forEach(state=>{
-  //     if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
-  //   })
-  //   return max;
-  // }
+  console.log(handleHover)
+  const getMax = () => {
+    let max = 0;
+    info.forEach(state=>{
+      if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
+    })
+    return max;
+  }
   const colorScale = () => {
     switch (caseType) {
       case "active": {
@@ -58,6 +60,9 @@ const geographyStyle = {
       }
       case "deceased": {
         return colorScaleRed;
+      }
+      case "confirmed":{
+          return colorScaleRed1
       }
       default: {
         return colorScaleRed;
@@ -102,7 +107,21 @@ const geographyStyle = {
     '#c62828',
     '#b71c1c'
   ]);
-  console.log(caseType)
+  const colorScaleRed1 = scaleQuantile()
+  .domain([0, getMax()])
+  .range([
+    '#ffebee',
+    '#ffcdd2',
+    '#ef9a9a',
+    '#e57373',
+    '#ef5350',
+    '#f44336',
+    '#e53935',
+    '#d32f2f',
+    '#c62828',
+    '#b71c1c'
+  ]);
+  // console.log(caseType)
   const getconfirmed = (id,casetype)=>{
     // console.log(id,casetype)
     let c = info.find(s=>s.name === id)
