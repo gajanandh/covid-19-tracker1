@@ -1,4 +1,4 @@
-import React ,{useState,useContext}from 'react'
+import React ,{useContext}from 'react'
 import './cards.css'
 import CountUp from 'react-countup';
 import {CovidDataContext} from '../../context/data.context'

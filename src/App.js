@@ -9,16 +9,14 @@ import ChartList from './components/charts/chartlist'
 function App() {
   const [currentState, setCurrentState] = useState("TT");
   const [caseType, setCaseType] = useState("active");
-  const [preNum , setPrevNum] = useState()
 
 
   const handleHover=(id)=>{
     setCurrentState(id)
   }
   const getCasetype=(e)=>{
-    {setCaseType(e.target.innerText.toLowerCase())
-      console.log("hi")
-  }
+    setCaseType(e.target.innerText.toLowerCase())
+  
   }
 
   return (
