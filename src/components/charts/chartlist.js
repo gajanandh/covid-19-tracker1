@@ -51,7 +51,7 @@ const ChartList = ()=>{
                 }]
             }}
             option=  { {
-              legend:false,
+              
               responsive:true,
               maintainAspectRatio:false,
                 legend: {

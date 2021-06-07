@@ -1,4 +1,4 @@
-import React ,{ useContext,useState}from 'react'
+import React ,{ useContext}from 'react'
 import {CovidDataContext} from '../context/data.context'
 import './Table.css'
 import {STATE_NAMES} from '../statename'
