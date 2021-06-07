@@ -1,19 +1,35 @@
-h2,
-h4 {
-  text-transform: capitalize;
-  text-align: center;
+h2{
+    text-transform: capitalize;
 }
-.active:active{
-  background: rgba(148, 68, 253, 0.5);
+
+.confirmed{
+    color:rgb(250, 112, 112);
 }
-.recovered:active{
-  background: rgba(9, 243, 48, 0.5);
+.recovered{
+    color:rgb(32, 138, 5);
 }
-.deceased:active{
-  background: rgba(255, 0, 0, .5);
+.deceased  {
+    color:rgb(250, 112, 112);
 }
-@media (max-width: 600px){
-  .card{
-    width: 30vh;
+.active{
+    color:rgb(120, 64, 252);
+}
+.active,.confirmed ,.deceased ,.recovered
+{
+    flex-grow: 1;
+}
+
+@media (max-width:800px){
+
   }
-}
+@media (max-width:600px){
+    h2,h4{
+        font-size: 1em;
+        text-align: center;
+    }
+  }
+@media (max-width:280px){
+    h2{
+        font-size: .8em;
+    }
+  }

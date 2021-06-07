@@ -9,8 +9,8 @@ const INDIA_TOPO_JSON = require('./india.topo.json');
 
 
 const PROJECTION_CONFIG = {
-  scale: 350,
-  center: [82.5,22]
+  scale: 300,
+  center: [82.5,18]
 };
 
 
@@ -41,7 +41,6 @@ const geographyStyle = {
   if(!info){
     return null;
   }
-  console.log(handleHover)
   const getMax = () => {
     let max = 0;
     info.forEach(state=>{

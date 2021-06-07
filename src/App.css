@@ -1,67 +1,86 @@
-body {
-  background-color: #fff;
+body{
+  margin: 0;
 }
-#root {
+nav{
   display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.App {
-  display: flex;
-  flex-direction: column;
-  width: 95%;
   justify-content: space-between;
+  width: 100%;
+  background: rgb(46, 150, 87);
+  padding: 10px;
+  margin: 0px;
 }
-.cardlist {
+nav >h1{
+  margin: auto 10px;
+  color: white;
+}
+.icon>h1>a{
+  text-decoration: none;
+  cursor: pointer;
+  color: white;
+}
+.icon>h1{
+  margin-right: 4vw
+}
+.mainpage{
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
 }
-.left {
+.left{
+  width: 50%;
+}
+.right{
+  width: 50%;
+}
+.cardlist{
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  width: 100%;
+  margin: auto 10px
 }
-svg {
-  overflow: visible;
+
+canvas{
+  width:100% !important;
+  padding: 10px;
+}
+svg{
   outline: none;
 }
 
 
-.mainpage {
-  display: flex;
-  justify-content: space-between;
-}
-.cardlist {
-  display: flex;
-  flex-direction: row;
-  margin: 0px;
-}
-.active{
-  color:blue;
-}
-.recovered{
-  color: green;
-}
-.deceased{
-  color: red;
-}
-@media (max-width: 600px) {
-  .App{
-    width: 100vh;
-  }
-  .mainpage {
+
+
+@media (max-width:800px){
+  .mainpage{
+    display: flex;
+    width:100%; 
     flex-direction: column;
+    justify-content: center;
   }
-  svg {
-    width: 500px;
+  .left{
+    width: 80%;
   }
-  body {
-    width: 100vh;
-  }
-  .container{
-    margin: auto;
+  .right{
+    width: 80%;
   }
   table{
-    margin: auto ;
+    width: 100vw;
+    margin: auto 10px;
+
+  }
+
+}
+
+@media (max-width:685px){
+
+  .left{
+    width: 100%;
+  }
+}
+@media (max-width:350px){
+  nav>h1{
+    font-size: 16px;
+  }
+  .left{
+    width: 100%;
   }
 }

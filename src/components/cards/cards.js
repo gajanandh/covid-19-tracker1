@@ -11,19 +11,17 @@ const Card = ({currentState,casetype,className,getCasetype})=>{
       }
     let cases;
     
-      console.log(getCasetype)
     const state = data.find(s=>s.name===currentState)
     if(casetype === 'active'){
-         cases = state?state.confirmed-state.recovered:"na"
+         cases = state?state.confirmed-state.recovered:"____"
     }
     else{
         cases = state?state[casetype]:"____"
-        // setPrevNum(cases)
     }
     return(
-        <div onClick={getCasetype}  className={className}>
-            <h2>{casetype}</h2>
-            <h4><CountUp start={0} end={cases} duration={.8} separator="," formattingFn={(num) => num.toLocaleString("en-IN")} /></h4>
+        <div onClick={getCasetype}  className={`${className} card`}>
+            <h2 className={casetype}>{casetype}</h2>
+            <h4 className={casetype}><CountUp  start={0} end={cases} duration={.8} separator="," formattingFn={(num) => num.toLocaleString("en-IN")} /></h4>
             
         </div>       
            )

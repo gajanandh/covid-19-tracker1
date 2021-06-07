@@ -1,35 +1,32 @@
 table {
   display: block;
-  width: 550px;
-  height: 600px;
-  overflow-y: scroll;
-  margin-top: 550px;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
+  text-indent: 10px;
+  border-spacing: 0px;
+  margin-top: 15px;
+  margin: 10px;
 }
 
- {
-  width: 1px;
-}
-
-th {
-  padding: 10px;
-  color: rgb(124, 133, 45);
+thead{
+  color: green;
+  font-size: 2em;
   text-transform: capitalize;
-  font-size: 1.5em;
-  font-weight: 800;
+  text-align: left;
+  padding: 10px;
+  width: 50px;
 }
-
-tr:nth-child(even) {
-  background-color: rgb(165, 164, 164);
-}
-
-td {
+td{
   padding: 10px;
 }
-table {
-  margin: 0;
-  border-spacing: 0;
+td:first-child{
+  white-space: pre-wrap;
   text-align: center;
+  font-weight: 500;
+  font-size:1.2em
 }
-::-webkit-scrollbar {
-  width: 1px;
+
+tr:nth-of-type(even){
+    background-color:rgba(105, 102, 105, 0.5)
 }

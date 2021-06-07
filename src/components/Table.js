@@ -1,4 +1,4 @@
-import React ,{ useContext}from 'react'
+import React ,{ useContext,useState}from 'react'
 import {CovidDataContext} from '../context/data.context'
 import './Table.css'
 import {STATE_NAMES} from '../statename'
@@ -12,25 +12,27 @@ const Table =(prop)=>{
       let statename = (STATE_NAMES[id])
       return statename
     }
-console.log(Object.entries(STATE_NAMES))
      data = data.sort(function (a, b) {
-      if (a.confirmed < b.confirmed) {
+      if (a.confirmed > b.confirmed) {
         return -1;
       }
-      if (a.confirmed > b.confirmed) {
+      if (a.confirmed < b.confirmed) {
         return 1;
       }
       return 0;
     });
+    
+    
 
     return(
+      <div className="table">
         <table>
         <thead>
           <tr>
             <th >state</th>
             <th>cases</th>
             <th>active</th>
-            <th>recovered</th>
+            <th >recovered</th>
             <th>deaths</th>
           </tr>
         </thead>
@@ -48,7 +50,7 @@ console.log(Object.entries(STATE_NAMES))
       }
       )}
         </tbody>
-      </table>
+      </table></div>
     )
 
 }

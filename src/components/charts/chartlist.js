@@ -26,6 +26,7 @@ const ChartList = ()=>{
     },[casetype])
     const handleCaseType = (e)=>{
         setCaseType(e.target.value)
+        console.log(casetype)
     }
     return(
         <div>
@@ -35,11 +36,13 @@ const ChartList = ()=>{
                 <option value="deceased">deaths</option>
             </select>
 
-            
+           <div className="chart">
             <Line
             data = {{
+              
                 datasets:[{
                   fill:{
+                    label:`${casetype}`,
                     target: 'origin',
                     above: 'rgba(255, 0, 0,.8)',   // Area will be red above the origin
                     below: 'rgb(0, 0, 255)'    // And blue below the origin
@@ -48,8 +51,9 @@ const ChartList = ()=>{
                 }]
             }}
             option=  { {
-                width:100,
-                height:100,
+              legend:false,
+              responsive:true,
+              maintainAspectRatio:false,
                 legend: {
                   display: false,
                 },
@@ -81,7 +85,7 @@ const ChartList = ()=>{
               }}
             
             />
-
+          </div> 
         </div>
     )
 }

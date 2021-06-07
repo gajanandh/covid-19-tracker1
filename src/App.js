@@ -15,13 +15,20 @@ function App() {
     setCurrentState(id)
   }
   const getCasetype=(e)=>{
-    setCaseType(e.target.innerText.toLowerCase())
+    setCaseType(e.target.className.toLowerCase()||e.target.parentElement.className)
   
   }
 
   return (
     <CovidDataProvider>
       <div className="App">
+        <nav>
+          <h1>CORONA Tracker</h1>
+          <div className="icon">
+            <h1><a href="https://github.com/gajanandh/covid-19-tracker1.git">GitHub</a></h1>
+            
+          </div>
+        </nav>
         <div className="mainpage">
           <div className='left'>
             <div className="cardlist" >
@@ -30,13 +37,14 @@ function App() {
               <Card getCasetype ={getCasetype} className = {"recovered"} currentState = {currentState} casetype = {'recovered'}/>
               <Card getCasetype ={getCasetype} className = {"deceased"}currentState = {currentState} casetype = {'deceased'}/>
             </div>
-            <Map handleHover ={handleHover} caseType = {caseType}/>  
+            <Map handleHover ={handleHover} caseType = {caseType}/> 
+            <ChartList/> 
           </div>
         <div className="right">
         <Table className = "table"/>
         </div>
       </div>
-      <ChartList/>
+    
       </div>
     </CovidDataProvider>
   );
