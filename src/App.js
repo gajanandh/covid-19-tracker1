@@ -3,8 +3,9 @@ import Map from "./components/maps/map"
 import Table from './components/Table'
 import './App.css';
 import {CovidDataProvider} from './context/data.context'
+import {TimeDataProvider} from './context/historicalData.context'
 import Card from './components/cards/cards'
-import ChartList from './components/charts/chartlist'
+import ChartList from './components/charts/chart.list'
 
 function App() {
   const [currentState, setCurrentState] = useState("TT");
@@ -15,8 +16,16 @@ function App() {
     setCurrentState(id)
   }
   const getCasetype=(e)=>{
-    setCaseType(e.target.className.toLowerCase()||e.target.parentElement.className)
-  
+    e.stopPropagation()
+    if(e.target.tagName === "SPAN"){
+      setCaseType(e.target.parentElement.className.toLowerCase())
+    }
+    if(e.target.tagName === 'H2'){
+      setCaseType(e.target.className.toLowerCase())
+    }
+    if(e.target.tagName === 'DIV'){
+      setCaseType(e.target.children[1].className.toLowerCase())
+    }
   }
 
   return (
@@ -37,8 +46,10 @@ function App() {
               <Card getCasetype ={getCasetype} className = {"recovered"} currentState = {currentState} casetype = {'recovered'}/>
               <Card getCasetype ={getCasetype} className = {"deceased"}currentState = {currentState} casetype = {'deceased'}/>
             </div>
-            <Map handleHover ={handleHover} caseType = {caseType}/> 
-            <ChartList/> 
+            <Map handleHover ={handleHover} caseType = {caseType}/>
+            <TimeDataProvider>
+              <ChartList/>  
+            </TimeDataProvider>
           </div>
         <div className="right">
         <Table className = "table"/>

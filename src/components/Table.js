@@ -41,10 +41,10 @@ const Table =(prop)=>{
         return(
           <tr key ={state.name}>
             <td>{getStateName(state.name)}</td>
-            <td>{state.confirmed}</td>
-            <td>{state.confirmed - state.recovered - state.deceased}</td>
-            <td>{state.recovered}</td>
-            <td>{state.deceased}</td>
+            <td>{state.confirmed.toLocaleString("en-IN")}</td>
+            <td>{(state.confirmed - state.recovered - state.deceased).toLocaleString("en-IN")}</td>
+            <td>{state.recovered.toLocaleString("en-IN")}</td>
+            <td>{state.deceased.toLocaleString("en-IN")}</td>
           </tr>
         )
       }

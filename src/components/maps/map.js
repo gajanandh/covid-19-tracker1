@@ -44,14 +44,14 @@ const geographyStyle = {
   const getMax = () => {
     let max = 0;
     info.forEach(state=>{
-      if (state.name !=="TT"&&state.confirmed>max) max = state.confirmed;
+      if (state.name !=="TT"&&state[caseType]>max) max = state[caseType];
     })
     return max;
   }
+
   const colorScale = () => {
     switch (caseType) {
       case "active": {
-        // console.log(caseType)
         return colorScaleBlue;
       }
       case "recovered": {
@@ -69,7 +69,7 @@ const geographyStyle = {
     }
   };
   const colorScaleBlue = scaleQuantile()
-  .domain([0, 100000])
+  .domain([0, getMax()])
   .range([
     '#CCE5FF',
     '#99CCFF',
@@ -81,7 +81,7 @@ const geographyStyle = {
     '#003366'
   ]);
   const colorScaleGreen = scaleQuantile()
-  .domain([0, 1000000])
+  .domain([0, getMax()])
   .range([
     '#CCFF99',
     '#99FF99',
@@ -93,7 +93,7 @@ const geographyStyle = {
     '#336600'
   ]);
   const colorScaleRed = scaleQuantile()
-  .domain([0, 10000])
+  .domain([0, getMax()])
   .range([
     '#ffebee',
     '#ffcdd2',
@@ -120,9 +120,7 @@ const geographyStyle = {
     '#c62828',
     '#b71c1c'
   ]);
-  // console.log(caseType)
   const getconfirmed = (id,casetype)=>{
-    // console.log(id,casetype)
     let c = info.find(s=>s.name === id)
     return c[casetype]
   }
@@ -148,7 +146,7 @@ const geographyStyle = {
   };
 
   return (
-    <div className="full-width-height container">
+    <div className="map-container container">
      
         <ReactTooltip>{tooltipContent}</ReactTooltip>
         <ComposableMap
@@ -162,7 +160,6 @@ const geographyStyle = {
             {({ geographies }) =>
               geographies.map(geo => {
                 let c = info.find(s=>s.name === geo.id)
-                // console.log(caseType)
                 return (
                   <Geography
                     key={geo.rsmKey}
