@@ -8,7 +8,7 @@ export function CovidDataProvider(props) {
 const [data,setData]=useState();
   useEffect( ()=>{
     const getdata = async()=>{
-      const res = await fetch("	https://api.covid19india.org/v4/min/data.min.json");
+      const res = await fetch("https://data.covid19india.org/v4/min/data.min.json");
       const json = await res.json()
       const data = Object.entries(json)
 
