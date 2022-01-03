@@ -13,7 +13,7 @@ const Card = ({currentState,casetype,className,getCasetype})=>{
     
     const state = data.find(s=>s.name===currentState)
     if(casetype === 'active'){
-         cases = state?state.confirmed-state.recovered:"____"
+         cases = state?state.confirmed-state.recovered-state.deceased:"____"
     }
     else{
         cases = state?state[casetype]:"____"
